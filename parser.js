@@ -96,8 +96,9 @@ exports.handler = async function({
                             var methodStatus = method.$.status;
                             // this section pulls time information from the methods for the overarching test case
                             if (stepNumber == 0) {
-                                startTime = method.$['started-at'];
+                                startTime = new Date(method.$['started-at']);
                                 startTime.setHours(startTime.getHours() + offset);
+                                startTime = startTime.toISOString();
                                 //this section pulls the test case ID from the params
                                 var params = Array.isArray(method.params.param) ? method.params.param : [method.params.param];
                                 for (var p = 0; p < params.length; p++) {
@@ -109,8 +110,9 @@ exports.handler = async function({
                                         };
                                 };
                             }
-                            endTime = method.$['finished-at'];
+                            endTime = new Date(method.$['finished-at']);
                             endTime.setHours(endTime.getHours() + offset);
+                            endTime = endTime.toISOString();
                             // this section pulls the stack trace for failures and attaches it to the overarching test case
                             if (methodStatus != 'PASS') {
                                 if (methodStatus == 'FAIL') {
