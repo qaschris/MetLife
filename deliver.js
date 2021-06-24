@@ -97,7 +97,7 @@ const main = async () => {
                         attachmentName = files[f];
                         console.log('=== read attachment file ' + attachmentName + ' successfully ===');
                         // base64 encode the contents of the results file
-                        let buff = new Buffer(attachment);
+                        let buff = new Buffer.from(attachment);
                         let base64data = buff.toString('base64');
                         var encodedAttachment = {
                             'name': attachmentName,
@@ -119,6 +119,12 @@ const main = async () => {
     let buff = new Buffer.from(result);
     let base64data = buff.toString('base64');
 
+    console.log('=== time zone: ' + (new Date().toTimeString().slice(9)) + ' ===');
+    console.log('=== time zone name: ' + (Intl.DateTimeFormat().resolvedOptions().timeZone) + ' ===');
+    console.log('=== UTC offset: ' + (new Date().getTimezoneOffset() / -60) + ' ===');
+
+    let offset = new Date().getTimezoneOffset() / -60;
+
     // establish the options for the webhook post to Pulse parser
     var opts = {
         url: pulseUri,
@@ -126,6 +132,7 @@ const main = async () => {
         body: {
             'projectId': projectId,
             'testcycle': cycleId,
+            'offset': offset,
             'result': base64data,
             'attachments': attachments
         }
