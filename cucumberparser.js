@@ -157,6 +157,6 @@ exports.handler = function ({ event: body, constants, triggers }, context, callb
         "logs": testLogs
     };
 
-    emitEvent('UpdateQTestWithFormattedResults', formattedResults);
+    emitEvent('UploadToqTest', formattedResults);
 
 }
