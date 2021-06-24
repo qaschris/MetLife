@@ -25,7 +25,7 @@ exports.handler = async function({
             "logs": testLogs
         };
 
-        emitEvent('UpdateQTestWithFormattedResults', formattedResults);
+        emitEvent('UploadToqTest', formattedResults);
     }
 
     const updateTestCase = async(testCaseId, updatedTestCase) => {
